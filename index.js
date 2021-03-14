@@ -16,7 +16,7 @@ app.listen(
 let HIGH = 0x01;
 let LOW = 0x00;
 let board = new arduino.Board({
-    // port: arduinoPort,
+    port: arduinoPort,
 });
 
 let col = [false, false, false, false, false];
@@ -27,10 +27,10 @@ let rowPin = [];
 
 board.on("ready", () => {
     for (let x = 2; x <= 6; x++) {
-        colPin[x - 2] = new five.Pin(x);
+        colPin[x - 2] = new arduino.Pin(x);
     }
     for (let y = 7; y <= 13; y++) {
-        rowPin[y - 7] = new five.Pin(y);
+        rowPin[y - 7] = new arduino.Pin(y);
     }
 
     board.loop(500, () => {
