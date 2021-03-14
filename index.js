@@ -13,34 +13,47 @@ app.listen(
     () => console.log(`live at http://localhost:${hostingPORT}`)
 )
 
-let led = [false, false, false, false];
 let HIGH = 0x01;
 let LOW = 0x00;
 let board = new arduino.Board({
-    // port: arduinoPort,
+    port: arduinoPort,
 });
-let pin = [];
+
+let col = [false, false, false, false, false];
+let row = [false, false, false, false, false, false, false];
+
+let colPin = [];
+let rowPin = [];
 
 board.on("ready", () => {
-    for (let i = 2; i <= 12; i++) {
-        pin[i] = new arduino.Pin(i);
+    for (let x = 2; x <= 6; x++) {
+        colPin[x - 2] = new arduino.Pin(x);
+    }
+    for (let y = 7; y <= 13; y++) {
+        rowPin[y - 7] = new arduino.Pin(y);
     }
 
-    board.loop(200, () => {
+    board.loop(500, () => {
         main();
     });
 });
 
 async function main() {
-    for (let i = 0; i < led.length; i++) {
-        let state = led[i] ? HIGH : LOW;
-        pin[i + 2].write(state);
+    for (let x = 0; x < col.length; x++) {
+        value = col[x] ? HIGH : LOW;
+        colPin[x].write[value]
+    }
+
+    for (let y = 0; y < col.length; y++) {
+        value = row[y] ? LOW : HIGH;
+        rowPin[y].write[value]
     }
 }
 
 app.get("/led", (req, res) => {
     res.status(200).send({
-        ledArray: led,
+        col: col,
+        row: row,
     })
 });
 
@@ -49,42 +62,13 @@ app.get("/", (req, res) => {
     res.render("web/index.html");
 });
 
-app.post("/led/change", (req, res) => {
-    let {changeLed: changeLed} = req.body;
-    changeLed = eval(changeLed)
-
-    if (changeLed > 3 || changeLed < 0) {
-        res.status(400).send("invalid LED");
-    }
-    
-    if (typeof(changeLed) == "number") {
-        led[changeLed] = !led[changeLed];
-    } else if (typeof(changeLed) == "object") {
-        for ( let i = 0; i < changeLed.length; i++) {
-            led[changeLed[i]] = !led[changeLed[i]];
-        }
-    } else {
-        res.status(400).send("invalid LED datatype")
-    }
-
-    res.send({
-        message:`changed Led ${changeLed}`,
-        newArray: led,
-        inputDataType: typeof(changeLed),
-    });
-})
-
 app.post("/led/set", (req, res) => {
-    let {newState: newState} = req.body;
-    newState = eval(newState)
-    
-    if (typeof newState != "object" || newState.length != 4) {
-        res.status(401).send("invalid datatype")
-    }
+    let {newCols: newCols, newRows: newRows} = req.body;
+    col = eval(newCols)
+    row = eval(newRows)
 
-    led = newState;
     res.send({
-        message: `set LED to ${newState}`,
-        LedArray: newState,
+        col: col,
+        row: row,
     })
 })
