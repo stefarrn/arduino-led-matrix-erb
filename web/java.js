@@ -25,13 +25,13 @@ function draw() {
   }
 
   for (let x = 0; x < col.length; x++) {
-    let color = col[x] ? [200, 60, 0] : [200, 200, 200];
+    let color = col[x] ? [0, 60, 200] : [200, 200, 200];
     fill(color)
     rect(x * scl, 7 * scl, scl, scl)
   }
 
   for (let y = 0; y < row.length; y++) {
-    let color = row[y] ? [200, 60, 0] : [200, 200, 200];
+    let color = row[y] ? [0, 60, 200] : [200, 200, 200];
     fill(color)
     rect(5 * scl, y * scl, scl, scl)
   }
