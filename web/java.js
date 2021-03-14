@@ -9,17 +9,18 @@ function setup() {
 }
 
 function draw() {
-  background(200);
+  background(50);
   getMatrixStatus();
   frameRate(2);
 
   for (let x = 0; x < col.length; x++) {
     for (let y = 0; y < row.length; y++) {
       let state = col[x] && row[y];
-      let color = state ? [200, 0, 0] : [50, 50, 50];
+      let color = state ? [200, 0, 0] : [200, 200, 200];
 
       fill(color)
-      rect(x * scl, y * scl, scl, scl)
+      ellipseMode(CORNER)
+      ellipse(x * scl, y * scl, scl-2, scl-2)
     }
   }
 }

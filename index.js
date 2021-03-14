@@ -44,7 +44,7 @@ async function main() {
         colPin[x].write(value)
     }
 
-    for (let y = 0; y < col.length; y++) {
+    for (let y = 0; y < row.length; y++) {
         let value = row[y] ? LOW : HIGH;
         rowPin[y].write(value)
     }
@@ -58,7 +58,6 @@ app.get("/led", (req, res) => {
 });
 
 app.get("/", (req, res) => {
-    let { port:newCOM } = req.body
     res.render("web/index.html");
 });
 
