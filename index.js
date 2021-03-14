@@ -40,13 +40,13 @@ board.on("ready", () => {
 
 async function main() {
     for (let x = 0; x < col.length; x++) {
-        value = col[x] ? HIGH : LOW;
-        colPin[x].write[value]
+        let value = col[x] ? HIGH : LOW;
+        colPin[x].write(value)
     }
 
     for (let y = 0; y < col.length; y++) {
-        value = row[y] ? LOW : HIGH;
-        rowPin[y].write[value]
+        let value = row[y] ? LOW : HIGH;
+        rowPin[y].write(value)
     }
 }
 
