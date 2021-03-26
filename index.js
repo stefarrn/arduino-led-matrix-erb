@@ -40,13 +40,13 @@ board.on("ready", () => {
 
 async function main() {
     for (let x = 0; x < col.length; x++) {
-        value = col[x] ? HIGH : LOW;
-        colPin[x].write[value]
+        let value = col[x] ? HIGH : LOW;
+        colPin[x].write(value)
     }
 
-    for (let y = 0; y < col.length; y++) {
-        value = row[y] ? LOW : HIGH;
-        rowPin[y].write[value]
+    for (let y = 0; y < row.length; y++) {
+        let value = row[y] ? LOW : HIGH;
+        rowPin[y].write(value)
     }
 }
 
@@ -58,7 +58,6 @@ app.get("/led", (req, res) => {
 });
 
 app.get("/", (req, res) => {
-    let { port:newCOM } = req.body
     res.render("web/index.html");
 });
 
